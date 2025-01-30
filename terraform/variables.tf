@@ -1,5 +1,5 @@
 variable "instance_type" {
-  default = "t2.micro"
+  default     = "t2.micro"
   description = "instance type"
 }
 
@@ -17,21 +17,20 @@ variable "instance_name" {
 
 variable "key_name" {
   default = "vpn-keypair"
-  type = string
+  type    = string
 }
 
 variable "subnet_name" {
   default = "vpn-subnet"
-  type = string
+  type    = string
 }
 
 variable "security_group_name" {
   default = "vpn-security-group"
-  type = string
+  type    = string
 }
 
 variable "vpc_name" {
   default = "vpn-vpc"
-  type = string
+  type    = string
 }
-
