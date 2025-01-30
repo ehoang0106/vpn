@@ -94,36 +94,19 @@ resource "aws_network_acl" "vpn_network_acl" {
     rule_no = 100
     action = "allow"
     cidr_block = "0.0.0.0/0"
-    from_port = 443
-    to_port = 443
-  }
-
-  ingress {
-    protocol = "-1"
-    rule_no = 100
-    action = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port = 80
-    to_port = 80
+    from_port = 0
+    to_port = 0
   }
 
   #outbound rules
-  egress {
-    protocol = "-1"
-    rule_no = 100
-    action = "allow"
-    cidr_block = "0.0.0.0/0"
-    from_port = 443
-    to_port = 443
-  }
 
   egress {
     protocol = "-1"
     rule_no = 100
     action = "allow"
     cidr_block = "0.0.0.0/0"
-    from_port = 80
-    to_port = 80
+    from_port = 0
+    to_port = 0
   }
 }
 
