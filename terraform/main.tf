@@ -110,6 +110,11 @@ resource "aws_network_acl" "vpn_network_acl" {
   }
 }
 
+#allocate a elastic ip
+resource "aws_eip" "vpn_eip" {
+  instance = aws_instance.vpn_server.id
+}
+
 # create a ec2 instance
 resource "aws_instance" "vpn_server" {
   ami           = var.ami_id
@@ -125,4 +130,8 @@ resource "aws_instance" "vpn_server" {
   tags = {
     Name = var.instance_name
   }
+
+  #assign a elastic ip to the instance
+  associate_public_ip_address = true
+  
 }
