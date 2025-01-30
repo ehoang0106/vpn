@@ -1,0 +1,56 @@
+name: 'Terraform'
+
+on: 
+  workflow_dispatch:
+    inputs:
+      terraform_job:
+        description: 'Terraform job to run'
+        type: choice
+        options:
+          - 'plan'
+          - 'apply'
+          - 'destroy'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  terraform:
+    name: 'Spin up VPN server'
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./terraform
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-session-name: 'GH_TO_AWS_VIA_OIDC'
+          aws-region: ap-southeast-2
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan 
+      
+      - name: Terraform Apply
+        if: ${{ github.event.inputs.terraform_job == 'apply' }}
+        run: terraform apply -auto-approve
+
+      - name: Terraform Destroy
+        if: ${{ github.event.inputs.terraform_job == 'destroy' }}
+        run: terraform destroy -auto-approve
+
+      
