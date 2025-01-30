@@ -38,13 +38,14 @@ resource "aws_security_group" "vpn_security_group" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  ingress = {
+  
+  ingress {
     from_port   = 945
     to_port     = 945
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
 
   ingress {
     from_port   = 1194
@@ -123,5 +124,22 @@ resource "aws_network_acl" "vpn_network_acl" {
     cidr_block = "0.0.0.0/0"
     from_port = 80
     to_port = 80
+  }
+}
+
+# create a ec2 instance
+resource "aws_instance" "vpn_server" {
+  ami           = var.ami_id
+  instance_type = var.instance_type
+  key_name      = var.key_name
+  subnet_id     = aws_subnet.vpn_subnet.id
+  vpc_security_group_ids = [aws_security_group.vpn_security_group.id]
+
+  root_block_device {
+    volume_size = 8
+    delete_on_termination = true
+  }
+  tags = {
+    Name = var.instance_name
   }
 }
