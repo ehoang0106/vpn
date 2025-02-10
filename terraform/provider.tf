@@ -15,3 +15,18 @@ terraform {
 provider "aws" {
   region = var.region
 }
+
+data "aws_ami" "vpn_ami" {
+  most_recent = true
+  # filter {
+  #   name   = "name"
+  #   values = ["OpenVPN Access Server / Self-Hosted VPN (BYOL)"]
+  # }
+
+  filter {
+    name = "product-code"
+    #openvpn access server / self-hosted vpn (byol)
+    values = ["f2ew2wrz425a1jagnifd02u5t"]
+  }
+  owners = ["aws-marketplace"]
+}

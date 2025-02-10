@@ -3,12 +3,12 @@ variable "instance_type" {
   description = "instance type"
 }
 
-variable "ami_id" {
-  default = "ami-056303ef214800fec"
-}
+# variable "ami_id" {
+#   default = "ami-056303ef214800fec"
+# }
 
 variable "region" {
-  default = "ap-southeast-2"
+  default = "us-west-1"
 }
 
 variable "instance_name" {
