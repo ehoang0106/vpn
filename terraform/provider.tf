@@ -18,11 +18,6 @@ provider "aws" {
 
 data "aws_ami" "vpn_ami" {
   most_recent = true
-  # filter {
-  #   name   = "name"
-  #   values = ["OpenVPN Access Server / Self-Hosted VPN (BYOL)"]
-  # }
-
   filter {
     name = "product-code"
     #openvpn access server / self-hosted vpn (byol)
