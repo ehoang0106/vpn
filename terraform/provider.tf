@@ -26,6 +26,7 @@ data "aws_ami" "vpn_ami" {
   filter {
     name = "product-code"
     #openvpn access server / self-hosted vpn (byol)
+    #this is a product code for the openvpn access server ami
     values = ["f2ew2wrz425a1jagnifd02u5t"]
   }
   owners = ["aws-marketplace"]
