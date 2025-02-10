@@ -169,12 +169,15 @@ output "elastic_ip" {
   value = aws_eip.vpn_eip.public_ip
 }
 
+#output ami id
+output "ami_id" {
+  value = data.aws_ami.vpn_ami.id
+}
 
 # create a ec2 instance
 resource "aws_instance" "vpn_server" {
-  ami                    = var.ami_id
+  ami                    = data.aws_ami.vpn_ami.id
   instance_type          = var.instance_type
-  key_name               = var.key_name
   subnet_id              = aws_subnet.vpn_subnet.id
   vpc_security_group_ids = [aws_security_group.vpn_security_group.id]
 
